@@ -1,0 +1,45 @@
+<h1>My Reading List</h1>
+<input class="search-bar" [(ngModel)]="searchTerm"  (ngModelChange)="filterBooks()"  placeholder="Search books..." />
+<mat-drawer-container class="container" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+        <mat-icon class="close" aria-hidden="false" aria-label="close" fontIcon="close" (click)="toggleDrawer()">
+        </mat-icon>
+
+        <div *ngIf="selectedBook">
+            <h2>{{selectedBook.title}}</h2>
+            <img class="cover" *ngIf="selectedBook.thumbnailUrl" src="{{selectedBook.thumbnailUrl}}" alt="{{selectedBook.title}}">
+            <h3>Authors:</h3>
+            <ul>
+                <li *ngFor="let author of selectedBook.authors">{{author}}</li>
+            </ul>
+            <div *ngIf="selectedBook.isbn">
+                <h3>Isbn:</h3>
+                <p>{{selectedBook.isbn}}</p>
+            </div>
+            <div *ngIf="selectedBook.publishedDate">
+                <h3>Publishing date:</h3>
+                <p>{{selectedBook.publishedDate.$date | date}}</p>
+            </div>
+            <div *ngIf="selectedBook.shortDescription">
+                <h3>Description:</h3>
+                <p>{{selectedBook.shortDescription}}</p>
+            </div>
+            <div *ngIf="selectedBook.pageCount">
+                <h3>Number of pages:</h3>
+                <p>{{selectedBook.pageCount}}</p>
+            </div>
+        </div>
+    </mat-drawer>
+  
+    
+    <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+        <div class="sidenav-content">
+            <div *ngIf="books.length>0; else noBooks">
+                <div class="box"  *ngFor="let book of books" (click)="toggleDrawer(book)" cdkDrag>{{book.title}}</div>
+            </div>
+            <ng-template #noBooks>
+                <div class="box" >No books found</div>
+            </ng-template>
+        </div>
+    </div>
+</mat-drawer-container>
