@@ -7,7 +7,9 @@
 
         <div *ngIf="selectedBook">
             <h2>{{selectedBook.title}}</h2>
-            <img class="cover" *ngIf="selectedBook.thumbnailUrl" src="{{selectedBook.thumbnailUrl}}" alt="{{selectedBook.title}}">
+            <div *ngIf="selectedBook.thumbnailUrl">
+                <img class="cover" *ngIf="selectedBook.thumbnailUrl" src="{{selectedBook.thumbnailUrl}}" alt="{{selectedBook.title}}">
+            </div>
             <h3>Authors:</h3>
             <ul>
                 <li *ngFor="let author of selectedBook.authors">{{author}}</li>
